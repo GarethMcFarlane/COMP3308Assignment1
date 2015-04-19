@@ -3,9 +3,12 @@
  */
 public class kNearestNeighbour {
 DataInstance trainingData;
+DataInstance testingData;
 int k;
+
     public kNearestNeighbour(String training, String testing, int k) {
         trainingData = new DataInstance(training);
+
         this.k = k;
     }
 

@@ -15,6 +15,7 @@ public class MyProgram {
                 default:
                     //KNN
                     kNearestNeighbour kNN = new kNearestNeighbour(trainingData, testingData, algorithm);
+
                     kNN.classify();
                     break;
             }

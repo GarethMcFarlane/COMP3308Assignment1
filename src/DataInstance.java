@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Gareth McFarlane on 19/04/2015.
@@ -13,16 +11,39 @@ import java.util.List;
 //contain classes, we need to check this in the following method.  Similarly, when access attributes externally,
 // training data classes will use the first n-1 indexes to access items while testing data classes will use
 // all indexes to access attributes.
-public class DataInstance {
+public class DataInstance implements Iterable<DataInstance.DataRow>, Iterator<DataInstance.DataRow> {
 List<DataRow> instanceList;
 String atrributeNames[];
+private int count = 0;
+
+    @Override
+    public Iterator<DataRow> iterator() {
+        return this;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (count < instanceList.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public DataRow next() {
+        if (count == instanceList.size()) {
+            throw new NoSuchElementException();
+        }
+        count++;
+        return instanceList.get(count -1);
+    }
 
 
-//Class for each row in the CSV file.
+    //Class for each row in the CSV file.
     public class DataRow {
         private String input;
         private double attributes[];
-        private String name; //Row's class.
+        public String name; //Row's class.
 
         //Constructor for a DataRow.  Takes a single input string and converts it into attributes.
         public DataRow(String line) {
