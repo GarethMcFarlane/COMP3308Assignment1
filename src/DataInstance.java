@@ -7,30 +7,45 @@ import java.util.List;
 /**
  * Created by Gareth McFarlane on 19/04/2015.
  */
+
+
+//This class will be used for storing both training and testing data.  As the testing data does not
+//contain classes, we need to check this in the following method.  Similarly, when access attributes externally,
+// training data classes will use the first n-1 indexes to access items while testing data classes will use
+// all indexes to access attributes.
 public class DataInstance {
 List<DataRow> instanceList;
 String atrributeNames[];
 
+
 //Class for each row in the CSV file.
     public class DataRow {
-        double attributes[];
-        String name; //Row's class.
+        private String input;
+        private double attributes[];
+        private String name; //Row's class.
 
         //Constructor for a DataRow.  Takes a single input string and converts it into attributes.
         public DataRow(String line) {
+            input = line;
             //Splits string into comma-delimited array.
             String[] tokens = line.split(",",-1);
             int dataSize = tokens.length;
             attributes = new double[dataSize];
 
-            //Gets all attributes then finds the class name.
-            for (int i = 0; i < dataSize - 2; ++i) {
-                attributes[i] = Double.parseDouble(tokens[i]);
+            //Gets all attributes and finds the class name.
+            for (int i = 0; i < dataSize; ++i) {
+                //If it detects a class, asign it.
+                if (tokens[i].equals("yes") || tokens[i].equals("no")) {
+                    name = tokens[i];
+                } else {
+                    //Else add it to the attributes.
+                    attributes[i] = Double.parseDouble(tokens[i]);
+                }
             }
-            name = tokens[dataSize-1];
         }
     }
 
+    //Constuctor for the entire data structure.
     public DataInstance(String filename) {
         instanceList = new ArrayList<DataRow>();
 
@@ -45,6 +60,18 @@ String atrributeNames[];
         }
     }
 
+
+
+
+    //Getters
+
+    public String getClass(int index) {
+        return instanceList.get(index).name;
+    }
+
+    public void getData(int index) {
+        System.out.println(instanceList.get(index).input);
+    }
 }
 
 
