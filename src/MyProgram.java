@@ -4,8 +4,19 @@ public class MyProgram {
             String trainingData = args[0];
             String testingData = args[1];
             int algorithm = checkAlgorithm(args[2]);
-            if (algorithm > -1) {
-                //Start classifying.
+            switch (algorithm) {
+                case -1:
+                    //Error
+                    break;
+                case 0:
+                    //NB
+                    //Call NB algorithm
+                    break;
+                default:
+                    //KNN
+                    kNearestNeighbour kNN = new kNearestNeighbour(trainingData, testingData, algorithm);
+                    kNN.classify();
+                    break;
             }
         }
     }

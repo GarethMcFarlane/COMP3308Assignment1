@@ -23,18 +23,18 @@ String atrributeNames[];
             int dataSize = tokens.length;
             attributes = new double[dataSize];
 
-            //Gets all attributes than finds the class name.
+            //Gets all attributes then finds the class name.
             for (int i = 0; i < dataSize - 2; ++i) {
                 attributes[i] = Double.parseDouble(tokens[i]);
-                name = tokens[dataSize-1];
             }
+            name = tokens[dataSize-1];
         }
     }
 
     public DataInstance(String filename) {
         instanceList = new ArrayList<DataRow>();
 
-
+        //Reads file line by line.
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -44,11 +44,6 @@ String atrributeNames[];
             System.out.println(e.getMessage());
         }
     }
-
-    public DataRow pop(int index) {
-        return instanceList.remove(index);
-    }
-
 
 }
 

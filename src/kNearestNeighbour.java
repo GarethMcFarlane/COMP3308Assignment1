@@ -4,12 +4,14 @@
 public class kNearestNeighbour {
 DataInstance data;
 int k;
-    public kNearestNeighbour(String filename, int k) {
-        data = new DataInstance(filename);
+    public kNearestNeighbour(String training, String testing, int k) {
+        data = new DataInstance(training);
         this.k = k;
     }
 
+void classify() {
 
+}
 }
 
 
