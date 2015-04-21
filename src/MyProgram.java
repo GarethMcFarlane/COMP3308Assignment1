@@ -6,16 +6,16 @@ public class MyProgram {
             int algorithm = checkAlgorithm(args[2]);
             switch (algorithm) {
                 case -1:
-                    //Error
+                    //Error.  Invalid arguments.
                     break;
                 case 0:
                     //NB
-                    //Call NB algorithm
+                    naiveBayes nB = new naiveBayes(trainingData, testingData);
+                    nB.classify();
                     break;
                 default:
                     //KNN
                     kNearestNeighbour kNN = new kNearestNeighbour(trainingData, testingData, algorithm);
-
                     kNN.classify();
                     break;
             }

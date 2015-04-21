@@ -13,7 +13,6 @@ import java.util.*;
 // all indexes to access attributes.
 public class DataInstance implements Iterable<DataInstance.DataRow>, Iterator<DataInstance.DataRow> {
 List<DataRow> instanceList;
-String atrributeNames[];
 private int count = 0;
 
     @Override
@@ -55,7 +54,7 @@ private int count = 0;
 
             //Gets all attributes and finds the class name.
             for (int i = 0; i < dataSize; ++i) {
-                //If it detects a class, asign it.
+                //If it detects a class, assign it.
                 if (tokens[i].equals("yes") || tokens[i].equals("no")) {
                     name = tokens[i];
                 } else {
@@ -66,7 +65,7 @@ private int count = 0;
         }
     }
 
-    //Constuctor for the entire data structure.
+    //Constructor for the entire data structure.
     public DataInstance(String filename) {
         instanceList = new ArrayList<DataRow>();
 

@@ -8,7 +8,7 @@ int k;
 
     public kNearestNeighbour(String training, String testing, int k) {
         trainingData = new DataInstance(training);
-
+        testingData = new DataInstance(testing);
         this.k = k;
     }
 
