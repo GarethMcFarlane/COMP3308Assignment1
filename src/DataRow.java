@@ -3,7 +3,7 @@
 public class DataRow {
     private String input;
     private double attributes[];
-    public String name; //Row's class.
+    private String name; //Row's class.
 
     //Constructor for a DataRow.  Takes a single input string and converts it into attributes.
     public DataRow(String line) {
@@ -23,5 +23,13 @@ public class DataRow {
                 attributes[i] = Double.parseDouble(tokens[i]);
             }
         }
+    }
+
+    public double getAttributes(int index) {
+        return attributes[index];
+    }
+
+    public String getClassName() {
+        return name;
     }
 }

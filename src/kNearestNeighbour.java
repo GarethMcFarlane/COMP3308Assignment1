@@ -18,11 +18,9 @@ void classify() {
 
 
 double euclidian(DataRow a, DataRow b) {
-
+    double result = 0;
+    return result;
 }
-
-
-
 
 
 }

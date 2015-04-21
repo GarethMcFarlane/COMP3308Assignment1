@@ -59,13 +59,13 @@ private int count = 0;
 
     //Getters
 
-    public String getClass(int index) {
-        return instanceList.get(index).name;
-    }
+    //public String getClass(int index) {
+       // return instanceList.get(index).name;
+   // }
 
     //public void getData(int index) {
-        System.out.println(instanceList.get(index).input);
-    }
+        //System.out.println(instanceList.get(index).input);
+   // }
 }
 
 
