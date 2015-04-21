@@ -15,6 +15,16 @@ int k;
 void classify() {
 
 }
+
+
+double euclidian(DataRow a, DataRow b) {
+
+}
+
+
+
+
+
 }
 
 

@@ -11,7 +11,7 @@ import java.util.*;
 //contain classes, we need to check this in the following method.  Similarly, when access attributes externally,
 // training data classes will use the first n-1 indexes to access items while testing data classes will use
 // all indexes to access attributes.
-public class DataInstance implements Iterable<DataInstance.DataRow>, Iterator<DataInstance.DataRow> {
+public class DataInstance implements Iterable<DataRow>, Iterator<DataRow> {
 List<DataRow> instanceList;
 private int count = 0;
 
@@ -38,32 +38,6 @@ private int count = 0;
     }
 
 
-    //Class for each row in the CSV file.
-    public class DataRow {
-        private String input;
-        private double attributes[];
-        public String name; //Row's class.
-
-        //Constructor for a DataRow.  Takes a single input string and converts it into attributes.
-        public DataRow(String line) {
-            input = line;
-            //Splits string into comma-delimited array.
-            String[] tokens = line.split(",",-1);
-            int dataSize = tokens.length;
-            attributes = new double[dataSize];
-
-            //Gets all attributes and finds the class name.
-            for (int i = 0; i < dataSize; ++i) {
-                //If it detects a class, assign it.
-                if (tokens[i].equals("yes") || tokens[i].equals("no")) {
-                    name = tokens[i];
-                } else {
-                    //Else add it to the attributes.
-                    attributes[i] = Double.parseDouble(tokens[i]);
-                }
-            }
-        }
-    }
 
     //Constructor for the entire data structure.
     public DataInstance(String filename) {
@@ -89,7 +63,7 @@ private int count = 0;
         return instanceList.get(index).name;
     }
 
-    public void getData(int index) {
+    //public void getData(int index) {
         System.out.println(instanceList.get(index).input);
     }
 }
