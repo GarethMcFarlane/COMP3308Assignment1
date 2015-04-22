@@ -26,6 +26,7 @@ private int count = 0;
         if (count < instanceList.size()) {
             return true;
         }
+        count = 0;
         return false;
     }
 

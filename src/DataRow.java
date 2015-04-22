@@ -30,6 +30,8 @@ public class DataRow {
         return attributes[index];
     }
 
+    public double[] getAttributes() {return attributes;}
+
     public String getClassName() {
         return name;
     }
@@ -40,5 +42,14 @@ public class DataRow {
 
     public double getDist() {
         return dist;
+    }
+
+    public boolean equals(DataRow a) {
+        for (int i = 0; i < 8; ++i) {
+            if (a.getAttributes(i) != this.getAttributes(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

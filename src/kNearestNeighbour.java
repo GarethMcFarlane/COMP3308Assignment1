@@ -24,7 +24,8 @@ void classify() {
         sortedNStack sns = new sortedNStack();
         //Populates the stack with the k best values;
             for (DataRow trainingRow : trainingData) {
-                sns.push(euclidian(trainingRow,testingRow),trainingRow.getClassName());
+                double dist = euclidian(trainingRow,testingRow);
+                sns.push(dist, trainingRow.getClassName());
             }
         //Outputs classification.
         sns.outputClass();
@@ -34,6 +35,7 @@ void classify() {
 
 double euclidian(DataRow a, DataRow b) {
     //Determines euclidian distance between two rows.
+
     double d = 0;
     for (int i = 0; i < 8; ++i) {
         d += Math.pow(a.getAttributes(i) - b.getAttributes(i),2);
@@ -49,14 +51,14 @@ double euclidian(DataRow a, DataRow b) {
         private ArrayList<String> classNames;
 
         public sortedNStack() {
-            distances = new ArrayList<Double>(Collections.nCopies(k, 0.0));
+            distances = new ArrayList<Double>(Collections.nCopies(k, Double.MAX_VALUE));
             classNames = new ArrayList<String>(Collections.nCopies(k,""));
         }
 
         public void push(double distance, String classname) {
             //Pushes an element onto the stack if it's better than the existing ones, else does nothing.
             for (int i = 0; i < k; ++i) {
-                if (distance > distances.get(k-1)) {
+                if (distance < distances.get(k-1)) {
                     classNames.remove(k-1);
                     distances.add(i, distance);
                     classNames.add(i,classname);
