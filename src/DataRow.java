@@ -4,6 +4,7 @@ public class DataRow {
     private String input;
     private double attributes[];
     private String name; //Row's class.
+    private double dist = 0; //Used for kNN.
 
     //Constructor for a DataRow.  Takes a single input string and converts it into attributes.
     public DataRow(String line) {
@@ -31,5 +32,13 @@ public class DataRow {
 
     public String getClassName() {
         return name;
+    }
+
+    public void setDist(double dist) {
+        this.dist = dist;
+    }
+
+    public double getDist() {
+        return dist;
     }
 }
