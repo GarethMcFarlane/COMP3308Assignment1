@@ -14,7 +14,7 @@ import java.util.*;
 public class DataInstance implements Iterable<DataRow>, Iterator<DataRow> {
 List<DataRow> instanceList;
 private int count = 0;
-    private int rowNum = 0;
+private int rowNum = 0;
 
     @Override
     public Iterator<DataRow> iterator() {
@@ -67,6 +67,8 @@ private int count = 0;
     }
 
     public int getRowNum() { return rowNum;};
+
+
 }
 
 

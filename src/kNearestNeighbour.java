@@ -11,10 +11,12 @@ DataInstance testingData;
 int k;
 
 
+
     public kNearestNeighbour(String training, String testing, int k) {
         trainingData = new DataInstance(training);
         testingData = new DataInstance(testing);
         this.k = k;
+
     }
 
 void classify() {
@@ -37,7 +39,7 @@ double euclidian(DataRow a, DataRow b) {
     //Determines euclidian distance between two rows.
 
     double d = 0;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < a.getRowLength(); ++i) {
         d += Math.pow(a.getAttributes(i) - b.getAttributes(i),2);
     }
     return Math.sqrt(d);
@@ -58,8 +60,11 @@ double euclidian(DataRow a, DataRow b) {
         public void push(double distance, String classname) {
             //Pushes an element onto the stack if it's better than the existing ones, else does nothing.
             for (int i = 0; i < k; ++i) {
-                if (distance < distances.get(k-1)) {
+                if (distance < distances.get(i)) {
+                    //Remove last element of array to clear up space.
                     classNames.remove(k-1);
+                    distances.remove(k-1);
+                    //Add new element
                     distances.add(i, distance);
                     classNames.add(i,classname);
                     return;
@@ -79,7 +84,7 @@ double euclidian(DataRow a, DataRow b) {
                     noCount++;
                 }
             }
-            if (yesCount > noCount) {
+            if (yesCount >= noCount) {
                 System.out.println("yes");
             } else {
                 System.out.println("no");
