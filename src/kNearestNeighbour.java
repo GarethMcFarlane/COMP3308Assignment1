@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+
 
 /**
  * Created by Gareth McFarlane on 19/04/2015.
@@ -16,22 +15,25 @@ int k;
         trainingData = new DataInstance(training);
         testingData = new DataInstance(testing);
         this.k = k;
-
     }
 
 void classify() {
-
+    //Iterates through every row in the test data.
     for (DataRow testingRow : testingData) {
+        //Creates a new stack for each instance of testing data.
         sortedNStack sns = new sortedNStack();
+        //Populates the stack with the k best values;
             for (DataRow trainingRow : trainingData) {
                 sns.push(euclidian(trainingRow,testingRow),trainingRow.getClassName());
             }
+        //Outputs classification.
         sns.outputClass();
     }
 }
 
 
 double euclidian(DataRow a, DataRow b) {
+    //Determines euclidian distance between two rows.
     double d = 0;
     for (int i = 0; i < 8; ++i) {
         d += Math.pow(a.getAttributes(i) - b.getAttributes(i),2);
@@ -52,6 +54,7 @@ double euclidian(DataRow a, DataRow b) {
         }
 
         public void push(double distance, String classname) {
+            //Pushes an element onto the stack if it's better than the existing ones, else does nothing.
             for (int i = 0; i < k; ++i) {
                 if (distance > distances.get(k-1)) {
                     classNames.remove(k-1);
@@ -64,6 +67,7 @@ double euclidian(DataRow a, DataRow b) {
 
 
         public void outputClass() {
+            //Determines majority class.
             int yesCount = 0;
             int noCount = 0;
             for (String s : classNames) {
