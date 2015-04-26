@@ -52,6 +52,7 @@ private int rowNum = 0;
                 instanceList.add(new DataRow(line));
                 rowNum++;
             }
+            br.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
