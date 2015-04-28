@@ -12,9 +12,9 @@ import java.util.*;
 // training data classes will use the first n-1 indexes to access items while testing data classes will use
 // all indexes to access attributes.
 public class DataInstance implements Iterable<DataRow>, Iterator<DataRow> {
-List<DataRow> instanceList;
+private List<DataRow> instanceList;
 private int count = 0;
-private int rowNum = 0;
+private int size = 0;
 
     @Override
     public Iterator<DataRow> iterator() {
@@ -50,7 +50,7 @@ private int rowNum = 0;
             String line;
             while ((line = br.readLine()) != null) {
                 instanceList.add(new DataRow(line));
-                rowNum++;
+                size++;
             }
             br.close();
         } catch (Exception e) {
@@ -62,12 +62,7 @@ private int rowNum = 0;
 
 
     //Getters
-
-    public DataRow getRow(int index) {
-        return instanceList.get(index);
-    }
-
-    public int getRowNum() { return rowNum;};
+    public int getSize() { return size;};
 
 
 }

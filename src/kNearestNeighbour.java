@@ -26,8 +26,7 @@ void classify() {
         sortedNStack sns = new sortedNStack();
         //Populates the stack with the k best values;
             for (DataRow trainingRow : trainingData) {
-                double dist = euclidian(trainingRow,testingRow);
-                sns.push(dist, trainingRow.getClassName());
+                sns.push(euclidian(trainingRow,testingRow), trainingRow.getClassName());
             }
         //Outputs classification.
         sns.outputClass();
