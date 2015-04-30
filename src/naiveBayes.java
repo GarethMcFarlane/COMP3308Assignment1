@@ -29,7 +29,7 @@ public class naiveBayes {
         // First we need to build a model of the training data
 
         // Get mean and averages
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < trainingData.getSize(); i++) {
             colmeany[i] = meanCalc(i, "yes");
             colmeann[i]  = meanCalc(i, "no");
 
