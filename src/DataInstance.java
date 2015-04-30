@@ -71,6 +71,7 @@ private int size = 0;
     //Getters
     public int getSize() { return size;};
 
+    public int getColumns() { return instanceList.get(0).getRowLength();}
 
 }
 

@@ -30,7 +30,7 @@ public class naiveBayes {
         // First we need to build a model of the training data
 
         // Get mean and averages
-        for (int i = 0; i < trainingData.getSize(); i++) {
+        for (int i = 0; i < trainingData.getColumns(); i++) {
             colmeany[i] = meanCalc(i, "yes");
             colmeann[i]  = meanCalc(i, "no");
 
@@ -87,6 +87,7 @@ public class naiveBayes {
     }
 
     double meanCalc (int column, String cls)  {
+
         int sum = 0;
         int n = 0;
 
@@ -107,15 +108,18 @@ public class naiveBayes {
         int altSum = 0;
         int n = 0;
 
-        for (DataRow i : testingData) {
-            if (cls.equals("yes") && i.getClassName().equals("yes")) {
-                altSum += square((i.getAttributes(column) - mean));
-                n++;
-            } else if (cls.equals("no") && i.getClassName().equals("no")) {
-                altSum += square((i.getAttributes(column) - mean));
-                n++;
+
+            for (DataRow i : testingData) {
+
+                if (cls.equals("yes") && i.getClassName().equals("yes")) {
+                    altSum += square((i.getAttributes(column) - mean));
+                    n++;
+                } else if (cls.equals("no") && i.getClassName().equals("no")) {
+                    altSum += square((i.getAttributes(column) - mean));
+                    n++;
+                }
+                //System.out.println(n);
             }
-        }
 
         return Math.sqrt(altSum / (n - 1));
     }
