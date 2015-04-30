@@ -39,6 +39,11 @@ private int size = 0;
         return instanceList.get(count -1);
     }
 
+    @Override
+    public void remove() {
+
+    }
+
 
 
     //Constructor for the entire data structure.
