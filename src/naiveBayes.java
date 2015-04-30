@@ -3,6 +3,7 @@
  *
  * Perfected by yozza on the 29th of April
  */
+
 public class naiveBayes {
     DataInstance trainingData;
     DataInstance testingData;
@@ -51,23 +52,25 @@ public class naiveBayes {
             }
 
             // Now that we have probabilities, we can use the Bayes function
-            System.out.println(Bayes(probsy, probsn));
+            System.out.println(bayes(probsy, probsn));
         }
 
     }
 
-    String Bayes (double [] yProbs, double [] nProbs) {
+    String bayes(double[] yProbs, double[] nProbs) {
         double yes = 0, no = 0;
         for (int i = 0; i < yProbs.length; i ++) {
             if (i == 0) yes = yProbs[i];
-
-            yes *= yProbs[i];
+            else {
+                yes *= yProbs[i];
+            }
         }
 
         for (int j = 0; j < nProbs.length; j++) {
             if (j == 0) no = nProbs[j];
-
-            no *= nProbs[j];
+            else {
+                no *= nProbs[j];
+            }
         }
 
         if (yes >= no) {
