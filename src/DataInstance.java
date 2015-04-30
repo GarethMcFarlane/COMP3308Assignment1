@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
+import java.io.*;
 
 /**
  * Created by Gareth McFarlane on 19/04/2015.
@@ -50,8 +51,9 @@ private int size = 0;
     public DataInstance(String filename) {
         instanceList = new ArrayList<DataRow>();
 
+
         //Reads file line by line.
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("..//src//" + filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 instanceList.add(new DataRow(line));
