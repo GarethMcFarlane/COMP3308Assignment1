@@ -22,6 +22,14 @@ public class naiveBayes {
         this.trainingData = new DataInstance(training);
         this.testingData = new DataInstance(testing);
 
+        colmeany = new double[trainingData.getColumns()];
+        colmeann = new double[trainingData.getColumns()];
+
+        coldevy = new double[trainingData.getColumns()];
+        coldevn = new double[trainingData.getColumns()];
+
+        probsy = new double[trainingData.getColumns()];
+        probsn = new double[trainingData.getColumns()];
 
     }
 
@@ -39,16 +47,15 @@ public class naiveBayes {
         }
 
         // Now use the model to classify test data
-        for (DataRow row : trainingData) {
+        for (DataRow row : testingData) {
 
-            if (row.getClassName().equals("yes")) {
-                for (int i = 0; i < row.getRowLength(); i++) {
-                    probsy [i] = pdf(row.getAttributes(i), i, "yes");
-                }
-            } else {
-                for (int i = 0; i < row.getRowLength(); i++) {
-                    probsn [i] = pdf(row.getAttributes(i), i, "no");
-                }
+            // calculate yes
+            for (int i = 0; i < row.getRowLength(); i++) {
+                probsy [i] = pdf(row.getAttributes(i), i, "yes");
+            }
+            // calculate no
+            for (int i = 0; i < row.getRowLength(); i++) {
+                probsn[i] = pdf(row.getAttributes(i), i, "no");
             }
 
             // Now that we have probabilities, we can use the Bayes function
@@ -79,19 +86,26 @@ public class naiveBayes {
     }
 
     double pdf (double val, int column, String cls) {
+        double part1 = 0, part2 = 0;
         if (cls.equals("yes")) {
-            return ((1 / (coldevy[column] * Math.sqrt(2 * Math.PI))) * Math.pow(Math.exp(1.0), -((square(val - colmeany[column]))/(2 * square(coldevy[column])))));
+            part1 = (1 / (coldevy[column] * Math.sqrt(2 * Math.PI)));
+            part2 = Math.pow(Math.exp(1.0), (-1 * ((square(val - colmeany[column]))/(2 * square(coldevy[column])))));
+
+            return part1 * part2;
         } else {
-            return ((1 / (coldevn[column] * Math.sqrt(2 * Math.PI))) * Math.pow(Math.exp(1.0), -((square(val - colmeann[column]))/(2 * square(coldevn[column])))));
+            part1 = (1 / (coldevn[column] * Math.sqrt(2 * Math.PI)));
+            part2 = Math.pow(Math.exp(1.0), (-1 * ((square(val - colmeann[column]))/(2 * square(coldevn[column])))));
+
+            return part1 * part2;
         }
     }
 
     double meanCalc (int column, String cls)  {
 
-        int sum = 0;
+        double sum = 0;
         int n = 0;
 
-        for (DataRow i : testingData) {
+        for (DataRow i : trainingData) {
             if (cls.equals("yes") && i.getClassName().equals("yes")) {
                 sum += i.getAttributes(column);
                 n++; // TODO: Check if N gives the correct result!
@@ -100,16 +114,15 @@ public class naiveBayes {
                 n++; // TODO: Check if N gives the correct result!
             }
         }
-
         return (sum / n);
     }
 
     double devCalc (int column, double mean, String cls) {
-        int altSum = 0;
+        double altSum = 0;
         int n = 0;
 
 
-            for (DataRow i : testingData) {
+            for (DataRow i : trainingData) {
 
                 if (cls.equals("yes") && i.getClassName().equals("yes")) {
                     altSum += square((i.getAttributes(column) - mean));
@@ -118,7 +131,6 @@ public class naiveBayes {
                     altSum += square((i.getAttributes(column) - mean));
                     n++;
                 }
-                //System.out.println(n);
             }
 
         return Math.sqrt(altSum / (n - 1));

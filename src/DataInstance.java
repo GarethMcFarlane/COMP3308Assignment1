@@ -51,7 +51,6 @@ private int size = 0;
     public DataInstance(String filename) {
         instanceList = new ArrayList<DataRow>();
 
-
         //Reads file line by line.
         try (BufferedReader br = new BufferedReader(new FileReader("..//src//" + filename))) {
             String line;
