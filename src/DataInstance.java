@@ -52,7 +52,7 @@ private int size = 0;
         instanceList = new ArrayList<DataRow>();
 
         //Reads file line by line.
-        try (BufferedReader br = new BufferedReader(new FileReader("..//src//" + filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 instanceList.add(new DataRow(line));

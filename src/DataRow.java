@@ -41,4 +41,6 @@ public class DataRow {
     public int getRowLength() {
         return rowLength;
     }
+
+    public String getInput() {return input;}
 }
