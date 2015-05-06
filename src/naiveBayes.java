@@ -21,15 +21,16 @@ public class naiveBayes {
     public naiveBayes(String training, String testing) {
         this.trainingData = new DataInstance(training);
         this.testingData = new DataInstance(testing);
+        int columns = trainingData.getColumns();
 
-        colmeany = new double[trainingData.getColumns()];
-        colmeann = new double[trainingData.getColumns()];
+        colmeany = new double[columns];
+        colmeann = new double[columns];
 
-        coldevy = new double[trainingData.getColumns()];
-        coldevn = new double[trainingData.getColumns()];
+        coldevy = new double[columns];
+        coldevn = new double[columns];
 
-        probsy = new double[trainingData.getColumns()];
-        probsn = new double[trainingData.getColumns()];
+        probsy = new double[columns];
+        probsn = new double[columns];
 
     }
 
@@ -106,12 +107,9 @@ public class naiveBayes {
         int n = 0;
 
         for (DataRow i : trainingData) {
-            if (cls.equals("yes") && i.getClassName().equals("yes")) {
+            if (cls.equals(i.getClassName())) {
                 sum += i.getAttributes(column);
-                n++; // TODO: Check if N gives the correct result!
-            } else if (cls.equals("no") && i.getClassName().equals("no")) {
-                sum += i.getAttributes(column);
-                n++; // TODO: Check if N gives the correct result!
+                n++;
             }
         }
         return (sum / n);
@@ -124,10 +122,7 @@ public class naiveBayes {
 
             for (DataRow i : trainingData) {
 
-                if (cls.equals("yes") && i.getClassName().equals("yes")) {
-                    altSum += square((i.getAttributes(column) - mean));
-                    n++;
-                } else if (cls.equals("no") && i.getClassName().equals("no")) {
+                if (cls.equals(i.getClassName())) {
                     altSum += square((i.getAttributes(column) - mean));
                     n++;
                 }
