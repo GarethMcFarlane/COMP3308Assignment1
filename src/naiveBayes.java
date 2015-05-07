@@ -17,6 +17,9 @@ public class naiveBayes {
     double [] coldevy;
     double [] coldevn;
 
+    double nprobtotal;
+    double yprobtotal;
+
 
     public naiveBayes(String training, String testing) {
         this.trainingData = new DataInstance(training);
@@ -32,11 +35,25 @@ public class naiveBayes {
         probsy = new double[columns];
         probsn = new double[columns];
 
+        yprobtotal = 0;
+        nprobtotal = 0;
+
     }
 
     public void classify() {
 
+        for (DataRow dr : trainingData) {
+            if (dr.getClassName().equals("yes")) {
+                yprobtotal++;
+            } else {
+                nprobtotal++;
+            }
+        }
+
+
+
         // First we need to build a model of the training data
+
 
         // Get mean and averages
         for (int i = 0; i < trainingData.getColumns(); i++) {
@@ -45,7 +62,11 @@ public class naiveBayes {
 
             coldevy[i] = devCalc(i, colmeany[i], "yes");
             coldevn[i] = devCalc(i, colmeann[i], "no");
+
         }
+
+
+
 
         // Now use the model to classify test data
         for (DataRow row : testingData) {
@@ -73,6 +94,7 @@ public class naiveBayes {
                 yes *= yProbs[i];
             }
         }
+        yes *= yprobtotal/ (yprobtotal + nprobtotal);
 
         for (int j = 0; j < nProbs.length; j++) {
             if (j == 0) no = nProbs[j];
@@ -80,6 +102,9 @@ public class naiveBayes {
                 no *= nProbs[j];
             }
         }
+
+        no *= nprobtotal/ (yprobtotal + nprobtotal);
+
 
         if (yes >= no) {
             return "yes";
@@ -89,16 +114,19 @@ public class naiveBayes {
     double pdf (double val, int column, String cls) {
         double part1 = 0, part2 = 0;
         if (cls.equals("yes")) {
-            part1 = (1 / (coldevy[column] * Math.sqrt(2 * Math.PI)));
-            part2 = Math.pow(Math.exp(1.0), (-1 * ((square(val - colmeany[column]))/(2 * square(coldevy[column])))));
-
-            return part1 * part2;
+            double divisor = (coldevy[column] * Math.sqrt(2 * Math.PI));
+            double exponent = -((square(val - colmeany[column]))/(2 * square(coldevy[column])));
+            double result = Math.exp(exponent) / divisor;
+            return result;
         } else {
-            part1 = (1 / (coldevn[column] * Math.sqrt(2 * Math.PI)));
-            part2 = Math.pow(Math.exp(1.0), (-1 * ((square(val - colmeann[column]))/(2 * square(coldevn[column])))));
-
-            return part1 * part2;
+            double divisor = (coldevn[column] * Math.sqrt(2 * Math.PI));
+            double exponent = -((square(val - colmeann[column]))/(2 * square(coldevn[column])));
+            double result = Math.exp(exponent) / divisor;
+            return result;
         }
+
+
+
     }
 
     double meanCalc (int column, String cls)  {
@@ -121,7 +149,6 @@ public class naiveBayes {
 
 
             for (DataRow i : trainingData) {
-
                 if (cls.equals(i.getClassName())) {
                     altSum += square((i.getAttributes(column) - mean));
                     n++;
