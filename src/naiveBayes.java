@@ -8,17 +8,9 @@ public class naiveBayes {
     DataInstance trainingData;
     DataInstance testingData;
 
-    double [] probsy;
-    double [] probsn;
+    double [] probsy,probsn,colmeany,colmeann,coldevy,coldevn;
+    double nprobtotal,yprobtotal;
 
-    double [] colmeany;
-    double [] colmeann;
-
-    double [] coldevy;
-    double [] coldevn;
-
-    double nprobtotal;
-    double yprobtotal;
 
 
     public naiveBayes(String training, String testing) {
@@ -35,13 +27,13 @@ public class naiveBayes {
         probsy = new double[columns];
         probsn = new double[columns];
 
-        yprobtotal = 0;
-        nprobtotal = 0;
+        yprobtotal = nprobtotal = 0;
 
     }
 
     public void classify() {
 
+        //Get the number of yes and no instances.
         for (DataRow dr : trainingData) {
             if (dr.getClassName().equals("yes")) {
                 yprobtotal++;
@@ -88,12 +80,14 @@ public class naiveBayes {
 
     String bayes(double[] yProbs, double[] nProbs) {
         double yes = 0, no = 0;
+        //Calculate probability
         for (int i = 0; i < yProbs.length; i ++) {
             if (i == 0) yes = yProbs[i];
             else {
                 yes *= yProbs[i];
             }
         }
+        //Calculate yes probability
         yes *= yprobtotal/ (yprobtotal + nprobtotal);
 
         for (int j = 0; j < nProbs.length; j++) {
@@ -102,7 +96,7 @@ public class naiveBayes {
                 no *= nProbs[j];
             }
         }
-
+        //Calculate no probability
         no *= nprobtotal/ (yprobtotal + nprobtotal);
 
 
@@ -111,6 +105,7 @@ public class naiveBayes {
         } else return "no";
     }
 
+    //Calculate PDF for each value.
     double pdf (double val, int column, String cls) {
         double part1 = 0, part2 = 0;
         if (cls.equals("yes")) {
@@ -128,7 +123,7 @@ public class naiveBayes {
 
 
     }
-
+    //Calculate mean
     double meanCalc (int column, String cls)  {
 
         double sum = 0;
@@ -143,11 +138,10 @@ public class naiveBayes {
         return (sum / n);
     }
 
+    //Calculate standard deviation.
     double devCalc (int column, double mean, String cls) {
         double altSum = 0;
         int n = 0;
-
-
             for (DataRow i : trainingData) {
                 if (cls.equals(i.getClassName())) {
                     altSum += square((i.getAttributes(column) - mean));

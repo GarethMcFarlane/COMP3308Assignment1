@@ -89,12 +89,7 @@ double euclidian(DataRow a, DataRow b) {
                 System.out.println("no");
             }
         }
-
     }
-
-
-
-
 }
 
 
